@@ -12,7 +12,7 @@ namespace Uni_BackEnd_API.Models
     public class React
     {
         [Key]
-        public string id { get; set; }
+        public int id { get; set; }
         [Required]
         public ReactOption react { get; set; }
         [Required]

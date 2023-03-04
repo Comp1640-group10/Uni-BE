@@ -14,6 +14,17 @@ namespace Uni_BackEnd_API.Controllers
         {
             return Ok(categories);
         }
+        [HttpGet("{id}")]
+        public IActionResult GetById(int categoryId)
+        {
+            var category = categories.SingleOrDefault(c => c.id == categoryId);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(category);
+        }
         [HttpPost]
         public IActionResult Create(Category newCategory)
         {
@@ -28,9 +39,18 @@ namespace Uni_BackEnd_API.Controllers
                 Data = category
             }) ;
         }
-        public IActionResult Get(int id)
+        [HttpPut("{id}")]
+        public IActionResult Update(int categoryId, Category updateCategory)
         {
-            return Ok();
+            var category = categories.SingleOrDefault(c => c.id == categoryId);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            //update
+            category.categoryName = updateCategory.categoryName;
+
+            return Ok(category);
         }
     }
 }

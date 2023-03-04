@@ -9,7 +9,7 @@ namespace Uni_BackEnd_API.Models
     public class User
     {
         [Key]
-        public string id { get; set; }
+        public int id { get; set; }
         [Required]
         public string fullName { get; set; }
         [Required]

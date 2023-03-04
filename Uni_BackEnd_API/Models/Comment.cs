@@ -6,7 +6,7 @@ namespace Uni_BackEnd_API.Models
     public class Comment
     {
         [Key]
-        public string id { get; set; }
+        public int id { get; set; }
         [Required]
         public DateTime dateTime { get; set; }
         [Required]

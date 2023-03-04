@@ -6,7 +6,7 @@ namespace Uni_BackEnd_API.Models
     public class View
     {
         [Key]
-        public string id { get; set; }
+        public int id { get; set; }
         [Required]
         public DateTime visitTime { get; set; }
         [Required]
