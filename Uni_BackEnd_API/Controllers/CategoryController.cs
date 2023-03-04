@@ -28,5 +28,9 @@ namespace Uni_BackEnd_API.Controllers
                 Data = category
             }) ;
         }
+        public IActionResult Get(int id)
+        {
+            return Ok();
+        }
     }
 }
