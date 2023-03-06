@@ -1,23 +1,31 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Uni_BackEnd_API.Data;
 using Uni_BackEnd_API.Models;
 
 namespace Uni_BackEnd_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "admin")]
     public class CategoryController : ControllerBase
     {
-        public static List<Category> categories = new List<Category>();
+        private readonly ApplicationDbContext _dbContext;
+        public CategoryController(ApplicationDbContext dbContext) { 
+        
+            _dbContext = dbContext;
+        }
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok(categories);
+            return Ok(_dbContext.Categories);
         }
-        [HttpGet("{id}")]
-        public IActionResult GetById(int categoryId)
+        [HttpGet("{CategoryId}")]
+        public IActionResult GetById(int CategoryId)
         {
-            var category = categories.SingleOrDefault(c => c.id == categoryId);
+            var category = _dbContext.Categories.SingleOrDefault(c => c.id == CategoryId);
             if (category == null)
             {
                 return NotFound();
@@ -26,32 +34,48 @@ namespace Uni_BackEnd_API.Controllers
             return Ok(category);
         }
         [HttpPost]
-        public IActionResult Create(Category newCategory)
+        public IActionResult Create([FromBody] Category newCategory)
         {
             var category = new Category();
             {
                 category.categoryName = newCategory.categoryName;
             }
-            categories.Add(category);
+            _dbContext.Categories.Add(category);
+            _dbContext.SaveChanges();
             return Ok(new
             {
                 Success = true,
                 Data = category
             }) ;
         }
-        [HttpPut("{id}")]
-        public IActionResult Update(int categoryId, Category updateCategory)
+        [HttpPut("{CategoryId}")]
+        public IActionResult Update(int CategoryId, Category updateCategory)
         {
-            var category = categories.SingleOrDefault(c => c.id == categoryId);
+            var category = _dbContext.Categories.SingleOrDefault(c => c.id == CategoryId);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            //update
+            category.categoryName = updateCategory.categoryName;
+            _dbContext.SaveChanges();
+
+            return Ok(category);
+        }
+        [HttpDelete("{CategoryId}"),ActionName("remove category")]
+        public IActionResult Delete(int CategoryId)
+        {
+            var category = _dbContext.Categories.SingleOrDefault(c => c.id == CategoryId);
             if (category == null)
             {
                 return NotFound();
             }
             //update
 
-            category.categoryName = updateCategory.categoryName;
+            _dbContext.Remove(category);
+            _dbContext.SaveChanges();
 
-            return Ok(category);
+            return Ok();
         }
     }
 }

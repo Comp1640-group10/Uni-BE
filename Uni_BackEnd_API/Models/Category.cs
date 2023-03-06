@@ -5,8 +5,8 @@ namespace Uni_BackEnd_API.Models
 {
     public class Category
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Key]
+        
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity), Key()]
         public int id { get; set; }
         [Required]
         public string categoryName { get; set; }

@@ -13,17 +13,19 @@ namespace Uni_BackEnd_API.Models
         public string filePath { get; set; }
         [Required]
         public DateTime dateTime { get; set; }
-        [Required]
-        public string userId { get; set; }
+        public int userId { get; set; }
         [ForeignKey("userId")]
         public User user { get; set; }
         [Required]
-        public string categoryId { get; set; }
+        public int categoryId { get; set; }
         [ForeignKey("categoryId")]
         public Category category { get; set; }
         [Required]
-        public string topicId { get; set; }
+        public int topicId { get; set; }
         [ForeignKey("topicId")]
         public Topic topic { get; set; }
+        public IEnumerable<Comment> comment{ get; set; }
+        public IEnumerable<View> view { get; set; }
+        public IEnumerable<React> reacts{ get; set; }
     }
 }

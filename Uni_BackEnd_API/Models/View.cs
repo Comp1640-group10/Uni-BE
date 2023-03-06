@@ -10,11 +10,11 @@ namespace Uni_BackEnd_API.Models
         [Required]
         public DateTime visitTime { get; set; }
         [Required]
-        public string userId { get; set; }
+        public int userId { get; set; }
         [ForeignKey("userId")]
         public User user { get; set; }
         [Required]
-        public string ideaId { get; set; }
+        public int ideaId { get; set; }
         [ForeignKey("ideaId")]
         public Idea idea { get; set; }
     }

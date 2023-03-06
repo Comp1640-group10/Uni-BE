@@ -18,9 +18,8 @@ namespace Uni_BackEnd_API.Models
         public int roleId { get; set; }
         [ForeignKey("roleId")]
         public Role Role { get; set; }
-        [Required]
-        public string departmentId { get; set; }
+        public int? departmentId { get; set; }
         [ForeignKey("departmentId")]
-        public Department Department { get; set; }
+        public Department? Department { get; set; }
     }
 }
