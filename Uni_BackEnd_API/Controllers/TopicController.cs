@@ -3,7 +3,9 @@ using Uni_BackEnd_API.Models;
 
 namespace Uni_BackEnd_API.Controllers
 {
-    public class TopicControllers : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class TopicController : Controller
     {
         public static List<Topic> topics = new List<Topic>();
         [HttpGet]
@@ -13,7 +15,7 @@ namespace Uni_BackEnd_API.Controllers
         }
         [HttpGet("{id}")]
         public IActionResult GetById(int topicId)
-        {
+        { 
             var topic = topics.SingleOrDefault(c => c.id == topicId);
             if (topic == null)
             {
