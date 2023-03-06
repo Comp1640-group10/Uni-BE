@@ -48,6 +48,7 @@ namespace Uni_BackEnd_API.Controllers
                 return NotFound();
             }
             //update
+
             category.categoryName = updateCategory.categoryName;
 
             return Ok(category);
