@@ -62,7 +62,7 @@ namespace Uni_BackEnd_API.Controllers
 
             return Ok(category);
         }
-        [HttpDelete("{CategoryId}"),ActionName("remove category")]
+        [HttpDelete("{CategoryId}")]
         public IActionResult Delete(int CategoryId)
         {
             var category = _dbContext.Categories.SingleOrDefault(c => c.id == CategoryId);
