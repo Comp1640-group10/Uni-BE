@@ -9,21 +9,12 @@ namespace Uni_BackEnd_API.Controllers
     [ApiController]
     public class TopicController : Controller
     {
-        private readonly ApplicationDbContext _dbContext;
-        public TopicController(ApplicationDbContext dbContext)
-        {
-
-            _dbContext = dbContext;
-        }
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok(_dbContext.Topics);
         }
-        [HttpGet("{topicId}")]
         public IActionResult GetById(int topicId)
         { 
-            var topic = _dbContext.Topics.SingleOrDefault(c => c.id == topicId);
             if (topic == null)
             {
                 return NotFound();
@@ -40,18 +31,14 @@ namespace Uni_BackEnd_API.Controllers
                 topic.closureDate = newTopic.closureDate;
                 topic.finalClosureDate = newTopic.finalClosureDate;
             }
-            _dbContext.Topics.Add(topic);
-            _dbContext.SaveChanges();
             return Ok(new
             {
                 Success = true,
                 Data = topic
             });
         }
-        [HttpPut("{topicId}")]
         public IActionResult Update(int topicId, Topic updateTopic)
         {
-            var topic = _dbContext.Topics.SingleOrDefault(c => c.id == topicId);
             if (topic == null)
             {
                 return NotFound();
@@ -77,7 +64,6 @@ namespace Uni_BackEnd_API.Controllers
             _dbContext.Remove(topic);
             _dbContext.SaveChanges();
 
-            return Ok();
         }
     }
 }
