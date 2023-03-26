@@ -20,6 +20,7 @@ namespace Uni_BackEnd_API.Controllers
         {
             return Ok(_dbContext.Topics);
         }
+        [HttpGet("{topicId}")]
         public IActionResult GetById(int topicId)
         {
             var topic = _dbContext.Topics.SingleOrDefault(c => c.id == topicId);
@@ -45,6 +46,7 @@ namespace Uni_BackEnd_API.Controllers
                 Data = topic
             });
         }
+        [HttpPut("{topicId}")]
         public IActionResult Update(int topicId, Topic updateTopic)
         {
             var topic = _dbContext.Topics.SingleOrDefault(c => c.id == topicId);
@@ -73,7 +75,7 @@ namespace Uni_BackEnd_API.Controllers
 
             _dbContext.Remove(topic);
             _dbContext.SaveChanges();
-            return Ok()
+            return Ok();
         }
     }
 }
