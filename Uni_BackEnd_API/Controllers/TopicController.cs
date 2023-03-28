@@ -40,6 +40,8 @@ namespace Uni_BackEnd_API.Controllers
                 topic.closureDate = newTopic.closureDate;
                 topic.finalClosureDate = newTopic.finalClosureDate;
             }
+            _dbContext.Topics.Add(topic);
+            _dbContext.SaveChanges();
             return Ok(new
             {
                 Success = true,

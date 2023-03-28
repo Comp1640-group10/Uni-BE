@@ -9,8 +9,7 @@ namespace Uni_BackEnd_API.Models
         public int id { get; set; }
         [Required]
         public string text { get; set; }
-        [Required]
-        public string filePath { get; set; }
+        public string? filePath { get; set; }
         [Required]
         public DateTime dateTime { get; set; }
         public int userId { get; set; }
@@ -24,8 +23,8 @@ namespace Uni_BackEnd_API.Models
         public int topicId { get; set; }
         [ForeignKey("topicId")]
         public Topic topic { get; set; }
-        public IEnumerable<Comment> comment{ get; set; }
-        public IEnumerable<View> view { get; set; }
-        public IEnumerable<React> reacts{ get; set; }
+        public IEnumerable<Comment>? comment{ get; set; }
+        public IEnumerable<View>? view { get; set; }
+        public IEnumerable<React>? reacts{ get; set; }
     }
 }

@@ -36,7 +36,7 @@ namespace Uni_BackEnd_API.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Uni_BackEnd_API.Models.Comment", b =>
@@ -66,7 +66,7 @@ namespace Uni_BackEnd_API.Migrations
 
                     b.HasIndex("userId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("Uni_BackEnd_API.Models.Department", b =>
@@ -83,7 +83,7 @@ namespace Uni_BackEnd_API.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Departments");
+                    b.ToTable("Departments", (string)null);
                 });
 
             modelBuilder.Entity("Uni_BackEnd_API.Models.Idea", b =>
@@ -101,7 +101,6 @@ namespace Uni_BackEnd_API.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("filePath")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("text")
@@ -122,7 +121,7 @@ namespace Uni_BackEnd_API.Migrations
 
                     b.HasIndex("userId");
 
-                    b.ToTable("Ideas");
+                    b.ToTable("Ideas", (string)null);
                 });
 
             modelBuilder.Entity("Uni_BackEnd_API.Models.React", b =>
@@ -148,7 +147,7 @@ namespace Uni_BackEnd_API.Migrations
 
                     b.HasIndex("userId");
 
-                    b.ToTable("Reacts");
+                    b.ToTable("Reacts", (string)null);
                 });
 
             modelBuilder.Entity("Uni_BackEnd_API.Models.Role", b =>
@@ -165,7 +164,7 @@ namespace Uni_BackEnd_API.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("Uni_BackEnd_API.Models.Topic", b =>
@@ -188,7 +187,7 @@ namespace Uni_BackEnd_API.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Topics");
+                    b.ToTable("Topics", (string)null);
                 });
 
             modelBuilder.Entity("Uni_BackEnd_API.Models.User", b =>
@@ -222,7 +221,7 @@ namespace Uni_BackEnd_API.Migrations
 
                     b.HasIndex("roleId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Uni_BackEnd_API.Models.View", b =>
@@ -248,7 +247,7 @@ namespace Uni_BackEnd_API.Migrations
 
                     b.HasIndex("userId");
 
-                    b.ToTable("Views");
+                    b.ToTable("Views", (string)null);
                 });
 
             modelBuilder.Entity("Uni_BackEnd_API.Models.Comment", b =>
@@ -256,7 +255,7 @@ namespace Uni_BackEnd_API.Migrations
                     b.HasOne("Uni_BackEnd_API.Models.Idea", "idea")
                         .WithMany("comment")
                         .HasForeignKey("ideaId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Uni_BackEnd_API.Models.User", "user")

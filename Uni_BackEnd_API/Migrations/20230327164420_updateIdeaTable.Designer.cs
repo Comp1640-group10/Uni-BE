@@ -12,8 +12,8 @@ using Uni_BackEnd_API.Data;
 namespace Uni_BackEnd_API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230321021619_Test")]
-    partial class Test
+    [Migration("20230327164420_updateIdeaTable")]
+    partial class updateIdeaTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -104,7 +104,6 @@ namespace Uni_BackEnd_API.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("filePath")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("text")
@@ -259,7 +258,7 @@ namespace Uni_BackEnd_API.Migrations
                     b.HasOne("Uni_BackEnd_API.Models.Idea", "idea")
                         .WithMany("comment")
                         .HasForeignKey("ideaId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Uni_BackEnd_API.Models.User", "user")

@@ -14,6 +14,7 @@ namespace Uni_BackEnd_API.Models
         public int userId { get; set; }
         [ForeignKey("userId")]
         public User user { get; set; }
+        [Required]
         public int ideaId { get; set; }
         [ForeignKey("ideaId")]
         public Idea idea { get; set; }
