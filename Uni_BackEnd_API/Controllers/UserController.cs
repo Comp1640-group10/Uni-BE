@@ -22,6 +22,76 @@ namespace Uni_BackEnd_API.Controllers
             _config = config;
             _dbContext = dbContext;
         }
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            return Ok(_dbContext.Users);
+        }
+        [HttpGet("{userId}")]
+        public IActionResult GetById(int userId)
+        {
+            var user = _dbContext.Users.SingleOrDefault(c => c.id == userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
+        }
+        [HttpPost]
+        public IActionResult CreateAccount([FromBody] User user)
+        {
+            var newUser = new User();
+            {
+                newUser.fullName = user.fullName;
+                newUser.password = user.password;
+                newUser.departmentId = user.departmentId;
+                newUser.roleId = user.roleId;
+            }
+            _dbContext.Users.Add(newUser);
+            _dbContext.SaveChanges();
+            return Ok(new
+            {
+                Success = true,
+                Data = newUser
+            });
+        }
+        [HttpPut("{userId}")]
+        public IActionResult UpdateAccount([FromBody] User user,int userId)
+        {
+            var updateUser = _dbContext.Users.SingleOrDefault(s => s.id == userId);
+            if (updateUser == null)
+            {
+                return NotFound();
+            }
+                updateUser.fullName = user.fullName;
+                updateUser.password = user.password;
+                updateUser.departmentId = user.departmentId;
+                updateUser.roleId = user.roleId;
+            _dbContext.Users.Update(updateUser);
+            _dbContext.SaveChanges();
+            return Ok(new
+            {
+                Success = true,
+                Data = updateUser
+            });
+        }
+        [HttpDelete("{userId}")]
+        public IActionResult DeleteAccount(int userId)
+        {
+            var user= _dbContext.Users.SingleOrDefault(s => s.id == userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            _dbContext.Users.Remove(user);
+            _dbContext.SaveChanges();
+            return Ok(new
+            {
+                Success = true,
+                Message = "Account has been removed"
+            });
+        }
 
         [HttpPost("Login")]
         public IActionResult Validate (LoginModel loginModel)
