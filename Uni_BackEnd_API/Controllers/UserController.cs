@@ -65,7 +65,6 @@ namespace Uni_BackEnd_API.Controllers
                 claims,
                 expires: DateTime.Now.AddMinutes(15),
                 signingCredentials: credentials);
-
             HttpContext.Session.SetString("userName", user.fullName);
             return new JwtSecurityTokenHandler().WriteToken(token);
 

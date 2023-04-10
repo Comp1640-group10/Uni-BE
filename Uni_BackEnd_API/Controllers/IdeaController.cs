@@ -22,7 +22,7 @@ namespace Uni_BackEnd_API.Controllers
         {
             return Ok(_dbContext.Ideas);
         }
-        [HttpGet("{ideaID}")]
+        [HttpGet("{ideaId}")]
         public IActionResult GetById(int ideaId)
         {
             var idea = _dbContext.Ideas.SingleOrDefault(c => c.id == ideaId);
@@ -30,18 +30,26 @@ namespace Uni_BackEnd_API.Controllers
             {
                 return NotFound();
             }
-
             return Ok(idea);
         }
         [HttpPost]
-        public IActionResult Create(Idea newidea, IFormFile file, string userName)
+        public IActionResult Create(Idea newidea, IFormFile? file, string userName)
         {
             var currentUser = _dbContext.Users.SingleOrDefault(c => c.fullName == HttpContext.Session.GetString("userName"));
 
             var idea = new Idea();
+            if(file != null)
             {
                 idea.text = newidea.text;
-                //idea.filePath = UploadFile(file);
+                idea.filePath = UploadFile(file);
+                idea.dateTime = DateTime.Now;
+                idea.userId = currentUser.id;
+                idea.topicId = newidea.topicId;
+                idea.categoryId = newidea.categoryId;
+            }
+            if (file == null)
+            {
+                idea.text = newidea.text;
                 idea.dateTime = DateTime.Now;
                 idea.userId = currentUser.id;
                 idea.topicId = newidea.topicId;
@@ -55,24 +63,8 @@ namespace Uni_BackEnd_API.Controllers
                 Data = idea
             });
         }
-        //[HttpPut("{ideaId}")]
-        //public IActionResult UpdateWithFile(int ideaId, Idea updateidea, IFormFile file)
-        //{
-        //    var idea = _dbContext.Ideas.SingleOrDefault(c => c.id == ideaId);
-        //    if (idea == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    //update
-
-        //    idea.text = updateidea.text;
-        //    //idea.filePath = UploadFile(file);
-        //    _dbContext.SaveChanges();
-        //    return Ok(idea);
-        //}
-
         [HttpPut("{ideaId}")]
-        public IActionResult Update(int ideaId, Idea updateidea)
+        public IActionResult Update(int ideaId, Idea updateidea, IFormFile? file)
         {
             var idea = _dbContext.Ideas.SingleOrDefault(c => c.id == ideaId);
             if (idea == null)
@@ -82,6 +74,11 @@ namespace Uni_BackEnd_API.Controllers
             //update
 
             idea.text = updateidea.text;
+            if (file != null)
+            {
+                idea.filePath = UploadFile(file);
+
+            }
             _dbContext.SaveChanges();
             return Ok(idea);
         }
@@ -100,7 +97,7 @@ namespace Uni_BackEnd_API.Controllers
             _dbContext.SaveChanges();
             return Ok();
         }
-        public async Task<string> UploadFile(IFormFile file)
+        private string UploadFile(IFormFile file)
         {
             string directoryPath = Path.Combine(_environment.ContentRootPath, "uploadFile");
 

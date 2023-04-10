@@ -35,7 +35,7 @@ namespace Uni_BackEnd_API.Controllers
         }
         [HttpPost]
         public IActionResult Create([FromBody] Category newCategory)
-        {
+        {          
             var category = new Category();
             {
                 category.categoryName = newCategory.categoryName;

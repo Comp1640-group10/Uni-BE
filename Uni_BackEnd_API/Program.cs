@@ -6,8 +6,8 @@ using System.Text;
 using Uni_BackEnd_API.Data;
 
 var builder = WebApplication.CreateBuilder(args);
-
 // Add services to the container.
+
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<ApplicationDbContext>(option =>
@@ -49,7 +49,7 @@ builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(15);
+    options.IdleTimeout = TimeSpan.FromDays(7);
 });
 
 
@@ -67,7 +67,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     };
 });
 
-
+//services cors
+builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
+{
+    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+}));
 
 var app = builder.Build();
 
@@ -79,14 +83,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseSession();
-
 
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapControllers();
 
