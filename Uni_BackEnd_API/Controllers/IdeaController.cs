@@ -33,23 +33,14 @@ namespace Uni_BackEnd_API.Controllers
             return Ok(idea);
         }
         [HttpPost]
-        public IActionResult Create(Idea newidea, IFormFile? file, string userName)
+        public IActionResult Create(Idea newidea)
         {
             var currentUser = _dbContext.Users.SingleOrDefault(c => c.fullName == HttpContext.Session.GetString("userName"));
 
             var idea = new Idea();
-            if(file != null)
             {
                 idea.text = newidea.text;
-                idea.filePath = UploadFile(file);
-                idea.dateTime = DateTime.Now;
-                idea.userId = currentUser.id;
-                idea.topicId = newidea.topicId;
-                idea.categoryId = newidea.categoryId;
-            }
-            if (file == null)
-            {
-                idea.text = newidea.text;
+                idea.filePath = newidea.filePath;
                 idea.dateTime = DateTime.Now;
                 idea.userId = currentUser.id;
                 idea.topicId = newidea.topicId;
@@ -64,7 +55,7 @@ namespace Uni_BackEnd_API.Controllers
             });
         }
         [HttpPut("{ideaId}")]
-        public IActionResult Update(int ideaId, Idea updateidea, IFormFile? file)
+        public IActionResult Update(int ideaId, Idea updateidea)
         {
             var idea = _dbContext.Ideas.SingleOrDefault(c => c.id == ideaId);
             if (idea == null)
@@ -74,11 +65,7 @@ namespace Uni_BackEnd_API.Controllers
             //update
 
             idea.text = updateidea.text;
-            if (file != null)
-            {
-                idea.filePath = UploadFile(file);
-
-            }
+            idea.filePath = updateidea.filePath;
             _dbContext.SaveChanges();
             return Ok(idea);
         }
@@ -97,16 +84,16 @@ namespace Uni_BackEnd_API.Controllers
             _dbContext.SaveChanges();
             return Ok();
         }
-        private string UploadFile(IFormFile file)
-        {
-            string directoryPath = Path.Combine(_environment.ContentRootPath, "uploadFile");
+        //private string UploadFile(IFormFile file)
+        //{
+        //    string directoryPath = Path.Combine(_environment.ContentRootPath, "uploadFile");
 
-            string filePath = Path.Combine(directoryPath, file.Name);
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                file.CopyTo(stream);
-            }
-            return filePath;
-        }
+        //    string filePath = Path.Combine(directoryPath, file.Name);
+        //    using (var stream = new FileStream(filePath, FileMode.Create))
+        //    {
+        //        file.CopyTo(stream);
+        //    }
+        //    return filePath;
+        //}
     }
 }
