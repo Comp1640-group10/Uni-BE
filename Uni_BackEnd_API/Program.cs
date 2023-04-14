@@ -68,10 +68,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 });
 
 //services cors
-builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
+builder.Services.AddCors(options =>
 {
-    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-}));
+    options.AddDefaultPolicy(
+        builder =>
+        {
+
+            //you can configure your custom policy
+            builder.AllowAnyOrigin()
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+        });
+});
 
 var app = builder.Build();
 
@@ -83,6 +91,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors();
 
 app.UseHttpsRedirection();
 
