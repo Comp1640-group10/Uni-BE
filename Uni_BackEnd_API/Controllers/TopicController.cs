@@ -37,8 +37,8 @@ namespace Uni_BackEnd_API.Controllers
             var topic = new Topic();
             {
                 topic.topicName = newTopic.topicName;
-                topic.closureDate = newTopic.closureDate;
-                topic.finalClosureDate = newTopic.finalClosureDate;
+                topic.closureDate = newTopic.closureDate.Date;
+                topic.finalClosureDate = newTopic.finalClosureDate.Date;
             }
             _dbContext.Topics.Add(topic);
             _dbContext.SaveChanges();
@@ -59,8 +59,8 @@ namespace Uni_BackEnd_API.Controllers
             //update
 
             topic.topicName = updateTopic.topicName;
-            topic.closureDate = updateTopic.closureDate;
-            topic.finalClosureDate = updateTopic.finalClosureDate;
+            topic.closureDate = updateTopic.closureDate.Date;
+            topic.finalClosureDate = updateTopic.finalClosureDate.Date;
             _dbContext.SaveChanges();
             return Ok(topic);
         }

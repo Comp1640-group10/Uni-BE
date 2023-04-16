@@ -30,7 +30,7 @@ namespace Uni_BackEnd_API.Controllers
             var comment = new Comment();
             {
                 comment.Text = newComment.Text;
-                comment.dateTime = DateTime.Now;
+                comment.dateTime = DateTime.Now.Date;
                 comment.userId = currentUser.id;
                 comment.ideaId = ideaId;
             }
@@ -60,7 +60,7 @@ namespace Uni_BackEnd_API.Controllers
             comment.Text = updateComment.Text;
             comment.userId = currentUser.id;
             comment.ideaId = ideaId;
-            comment.dateTime = DateTime.Now;
+            comment.dateTime = DateTime.Now.Date;
             _dbContext.SaveChanges();
             return Ok(comment);
         }

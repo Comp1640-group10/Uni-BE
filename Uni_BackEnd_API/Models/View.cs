@@ -8,6 +8,8 @@ namespace Uni_BackEnd_API.Models
         [Key]
         public int id { get; set; }
         [Required]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]
         public DateTime visitTime { get; set; }
         [Required]
         public int userId { get; set; }

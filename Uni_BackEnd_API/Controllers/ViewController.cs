@@ -39,7 +39,7 @@ namespace Uni_BackEnd_API.Controllers
             }
             var view = new View();
             {
-                view.visitTime = DateTime.Now;
+                view.visitTime = DateTime.Now.Date;
                 view.userId = currentUser.id;
                 view.ideaId = ideaId;
             }

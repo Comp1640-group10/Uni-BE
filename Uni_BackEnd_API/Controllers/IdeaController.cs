@@ -41,7 +41,7 @@ namespace Uni_BackEnd_API.Controllers
             {
                 idea.text = newidea.text;
                 idea.filePath = newidea.filePath;
-                idea.dateTime = DateTime.Now;
+                idea.dateTime = DateTime.Now.Date;
                 idea.userId = currentUser.id;
                 idea.topicId = newidea.topicId;
                 idea.categoryId = newidea.categoryId;

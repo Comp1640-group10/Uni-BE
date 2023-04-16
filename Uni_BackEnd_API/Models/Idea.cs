@@ -11,6 +11,8 @@ namespace Uni_BackEnd_API.Models
         public string text { get; set; }
         public string? filePath { get; set; }
         [Required]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]
         public DateTime dateTime { get; set; }
         public int userId { get; set; }
         [ForeignKey("userId")]
