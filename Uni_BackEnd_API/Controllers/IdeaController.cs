@@ -90,7 +90,7 @@ namespace Uni_BackEnd_API.Controllers
         public IActionResult ExportCSV()
         {
             var builder = new StringBuilder();
-            builder.AppendLine("Idea Name","View","Like");
+            builder.AppendLine("Idea Name,View,Like");
             var Ideas = _dbContext.Ideas;
             foreach(var idea in Ideas)
             {
