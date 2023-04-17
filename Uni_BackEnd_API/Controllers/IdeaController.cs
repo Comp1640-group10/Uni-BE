@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 using Uni_BackEnd_API.Data;
 using Uni_BackEnd_API.Models;
 
@@ -39,6 +40,7 @@ namespace Uni_BackEnd_API.Controllers
 
             var idea = new Idea();
             {
+                idea.name = newidea.name;
                 idea.text = newidea.text;
                 idea.filePath = newidea.filePath;
                 idea.dateTime = DateTime.Now.Date;
@@ -63,7 +65,7 @@ namespace Uni_BackEnd_API.Controllers
                 return NotFound();
             }
             //update
-
+            idea.name = updateidea.name;
             idea.text = updateidea.text;
             idea.filePath = updateidea.filePath;
             _dbContext.SaveChanges();
@@ -83,6 +85,20 @@ namespace Uni_BackEnd_API.Controllers
             _dbContext.Remove(idea);
             _dbContext.SaveChanges();
             return Ok();
+        }
+        [HttpGet("CSV")]
+        public IActionResult ExportCSV()
+        {
+            var builder = new StringBuilder();
+            builder.AppendLine("Idea Name|View|Like");
+            var Ideas = _dbContext.Ideas;
+            foreach(var idea in Ideas)
+            {
+                var viewCount = _dbContext.Views.Where(v => v.ideaId == idea.id).ToList().Count();
+                var LikeCount = _dbContext.Views.Where(v => v.ideaId == idea.id).ToList().Count();
+                builder.AppendLine($"{idea.name},{viewCount},{LikeCount}");
+            }
+            return File(Encoding.UTF8.GetBytes(builder.ToString()),"text/csv","Idea.csv");
         }
         //private string UploadFile(IFormFile file)
         //{

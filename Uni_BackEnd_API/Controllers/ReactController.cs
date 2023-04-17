@@ -17,16 +17,28 @@ namespace Uni_BackEnd_API.Controllers
             _dbContext = dbContext;
             _environment = environment;
         }
-        [HttpGet("{ideaId}")]
-        public IActionResult GetAll(int ideaId)
+        [HttpGet("{ideaId}/Like")]
+        public IActionResult GetAllLike(int ideaId)
         {
-            var view = _dbContext.Views.Where(w => w.ideaId == ideaId).ToList();
-            int viewCount = view.Count();
+            var like = _dbContext.Reacts.Where(w => w.ideaId == ideaId && w.react == ReactOption.LIKE).ToList();
+            int likeCount = like.Count();
             return Ok(new
             {
                 Success = true,
                 Message = "Success",
-                Count = viewCount
+                Count = likeCount
+            });
+        }
+        [HttpGet("{ideaId}/DisLike")]
+        public IActionResult GetAllDisLike(int ideaId)
+        {
+            var disLike = _dbContext.Reacts.Where(w => w.ideaId == ideaId && w.react == ReactOption.DISLIKE).ToList();
+            int disLikeCount = disLike.Count();
+            return Ok(new
+            {
+                Success = true,
+                Message = "Success",
+                Count = disLikeCount
             });
         }
         [HttpPut("{ideaId}/Like")]

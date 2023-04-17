@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Xml.Serialization;
 using Uni_BackEnd_API.Data;
 using Uni_BackEnd_API.Models;
@@ -7,6 +9,7 @@ namespace Uni_BackEnd_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "admin,manager")]
     public class TopicController : Controller
     {
         private readonly ApplicationDbContext _dbContext;

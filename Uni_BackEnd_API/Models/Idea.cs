@@ -8,6 +8,8 @@ namespace Uni_BackEnd_API.Models
         [Key]
         public int id { get; set; }
         [Required]
+        public string name { get; set; }
+        [Required]
         public string text { get; set; }
         public string? filePath { get; set; }
         [Required]
