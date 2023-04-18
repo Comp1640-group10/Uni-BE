@@ -111,11 +111,13 @@ namespace Uni_BackEnd_API.Controllers
                 {
                     Message = "Role Not Found"
                 });
-            return Ok(new {
+            return Ok(new
+            {
                 Success = true,
                 Message = "Success",
-                Data = token
-            });
+                Data = token,
+                Role = new JwtSecurityTokenHandler().ReadJwtToken(token).Claims.SingleOrDefault(n => n.Type == ClaimTypes.Role).Value.ToString()
+            }) ;
         }
         private string GenerateToken(User user)
         {
