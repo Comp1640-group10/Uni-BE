@@ -24,7 +24,7 @@ namespace Uni_BackEnd_API.Controllers
             return Ok(comments);
         }
         [HttpPost("{ideaId}")]
-        public IActionResult Create([FromBody] Comment newComment,int ideaId)
+        public IActionResult Create([FromBody] CmtModel newComment,int ideaId)
         {
             var currentUser = _dbContext.Users.SingleOrDefault(c => c.fullName == HttpContext.Session.GetString("userName"));
             var comment = new Comment();
@@ -43,7 +43,7 @@ namespace Uni_BackEnd_API.Controllers
             });
         }
         [HttpPut("{ideaId}/cmtId")]
-        public IActionResult Update(int ideaId, int cmtId, Comment updateComment)
+        public IActionResult Update(int ideaId, int cmtId, CmtModel updateComment)
         {
             var currentUser = _dbContext.Users.SingleOrDefault(c => c.fullName == HttpContext.Session.GetString("userName"));
             var comment = _dbContext.Comments.SingleOrDefault(c => c.id == cmtId);
