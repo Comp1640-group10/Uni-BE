@@ -9,7 +9,7 @@ namespace Uni_BackEnd_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "admin,manager")]
+    //[Authorize(Roles = "admin,manager")]
     public class CategoryController : ControllerBase
     {
         private readonly ApplicationDbContext _dbContext;

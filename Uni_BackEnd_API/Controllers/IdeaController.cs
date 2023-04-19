@@ -34,7 +34,7 @@ namespace Uni_BackEnd_API.Controllers
             return Ok(idea);
         }
         [HttpPost]
-        public IActionResult Create(Idea newidea)
+        public IActionResult Create(newIdeaModel newidea)
         {
             var currentUser = _dbContext.Users.SingleOrDefault(c => c.fullName == HttpContext.Session.GetString("userName"));
 
@@ -57,7 +57,7 @@ namespace Uni_BackEnd_API.Controllers
             });
         }
         [HttpPut("{ideaId}")]
-        public IActionResult Update(int ideaId, Idea updateidea)
+        public IActionResult Update(int ideaId, newIdeaModel updateidea)
         {
             var idea = _dbContext.Ideas.SingleOrDefault(c => c.id == ideaId);
             if (idea == null)
@@ -68,6 +68,8 @@ namespace Uni_BackEnd_API.Controllers
             idea.name = updateidea.name;
             idea.text = updateidea.text;
             idea.filePath = updateidea.filePath;
+            idea.topicId = updateidea.topicId;
+            idea.categoryId = updateidea.categoryId;
             _dbContext.SaveChanges();
             return Ok(idea);
         }

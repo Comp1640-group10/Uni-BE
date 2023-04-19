@@ -39,7 +39,7 @@ namespace Uni_BackEnd_API.Controllers
             return Ok(user);
         }
         [HttpPost]
-        public IActionResult CreateAccount([FromBody] User user)
+        public IActionResult CreateAccount([FromBody] NewUserModel user)
         {
             var newUser = new User();
             {
@@ -57,7 +57,7 @@ namespace Uni_BackEnd_API.Controllers
             });
         }
         [HttpPut("{userId}")]
-        public IActionResult UpdateAccount([FromBody] User user,int userId)
+        public IActionResult UpdateAccount([FromBody] NewUserModel user,int userId)
         {
             var updateUser = _dbContext.Users.SingleOrDefault(s => s.id == userId);
             if (updateUser == null)
