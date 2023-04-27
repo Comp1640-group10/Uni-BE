@@ -37,24 +37,32 @@ namespace Uni_BackEnd_API.Controllers
         public IActionResult Create(newIdeaModel newidea)
         {
             var currentUser = _dbContext.Users.SingleOrDefault(c => c.fullName == HttpContext.Session.GetString("userName"));
-
-            var idea = new Idea();
+            var topic = _dbContext.Topics.SingleOrDefault(c => c.id == newidea.topicId);
+            if (DateTime.Now < topic.finalClosureDate)
             {
-                idea.name = newidea.name;
-                idea.text = newidea.text;
-                idea.filePath = newidea.filePath;
-                idea.dateTime = DateTime.Now.Date;
-                idea.userId = currentUser.id;
-                idea.topicId = newidea.topicId;
-                idea.categoryId = newidea.categoryId;
+                var idea = new Idea();
+                {
+                    idea.name = newidea.name;
+                    idea.text = newidea.text;
+                    idea.filePath = newidea.filePath;
+                    idea.dateTime = DateTime.Now.Date;
+                    idea.userId = currentUser.id;
+                    idea.topicId = newidea.topicId;
+                    idea.categoryId = newidea.categoryId;
+                }
+                _dbContext.Ideas.Add(idea);
+                _dbContext.SaveChanges();
+                return Ok(new
+                {
+                    Success = true,
+                    Data = idea
+                });
             }
-            _dbContext.Ideas.Add(idea);
-            _dbContext.SaveChanges();
-            return Ok(new
+            else
             {
-                Success = true,
-                Data = idea
-            });
+                return BadRequest();
+            }
+
         }
         [HttpPut("{ideaId}")]
         public IActionResult Update(int ideaId, newIdeaModel updateidea)
