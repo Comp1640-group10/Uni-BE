@@ -27,20 +27,27 @@ namespace Uni_BackEnd_API.Controllers
         public IActionResult Create([FromBody] CmtModel newComment,int ideaId)
         {
             var currentUser = _dbContext.Users.SingleOrDefault(c => c.fullName == HttpContext.Session.GetString("userName"));
-            var comment = new Comment();
+            var idea = _dbContext.Ideas.SingleOrDefault(c=> c.id == ideaId);
+            var topic = _dbContext.Topics.SingleOrDefault(c => c.id == idea.topicId);
+            if (DateTime.Now < topic.closureDate)
             {
-                comment.Text = newComment.Text;
-                comment.dateTime = DateTime.Now.Date;
-                comment.userId = currentUser.id;
-                comment.ideaId = ideaId;
+                var comment = new Comment();
+                {
+                    comment.Text = newComment.Text;
+                    comment.dateTime = DateTime.Now.Date;
+                    comment.userId = currentUser.id;
+                    comment.ideaId = ideaId;
+                }
+                _dbContext.Comments.Add(comment);
+                _dbContext.SaveChanges();
+                return Ok(new
+                {
+                    Success = true,
+                    Data = comment
+                });
             }
-            _dbContext.Comments.Add(comment);
-            _dbContext.SaveChanges();
-            return Ok(new
-            {
-                Success = true,
-                Data = comment
-            });
+            else
+            { return BadRequest(); }
         }
         [HttpPut("{ideaId}/cmtId")]
         public IActionResult Update(int ideaId, int cmtId, CmtModel updateComment)

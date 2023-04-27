@@ -38,7 +38,7 @@ namespace Uni_BackEnd_API.Controllers
         {
             var currentUser = _dbContext.Users.SingleOrDefault(c => c.fullName == HttpContext.Session.GetString("userName"));
             var topic = _dbContext.Topics.SingleOrDefault(c => c.id == newidea.topicId);
-            if (DateTime.Now < topic.finalClosureDate)
+            if (DateTime.Now < topic.closureDate)
             {
                 var idea = new Idea();
                 {
