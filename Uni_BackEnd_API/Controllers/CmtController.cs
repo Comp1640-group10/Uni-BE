@@ -29,7 +29,7 @@ namespace Uni_BackEnd_API.Controllers
             var currentUser = _dbContext.Users.SingleOrDefault(c => c.fullName == HttpContext.Session.GetString("userName"));
             var idea = _dbContext.Ideas.SingleOrDefault(c=> c.id == ideaId);
             var topic = _dbContext.Topics.SingleOrDefault(c => c.id == idea.topicId);
-            if (DateTime.Now < topic.closureDate)
+            if (DateTime.Now < topic.finalClosureDate)
             {
                 var comment = new Comment();
                 {
